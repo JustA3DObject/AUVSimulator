@@ -1,0 +1,452 @@
+<?xml version="1.0"?>
+<scenario>
+    <environment>
+        <ned latitude="41.7777" longitude="3.0333"/>
+        <ocean>
+            <water density="1025.0" jerlov="0.2"/>
+            <waves height="0.02" length="10.0" period="2.0"/>
+            <particles enabled="true" />
+            <current type="uniform">
+                <velocity xyz="0.0 0.0 0.0"/>
+            </current>
+        </ocean>
+        <atmosphere>
+            <sun azimuth="20.0" elevation="50.0"/>
+            <conditions temperature="20.0" pressure="101300.0" humidity="0.5"/>
+            <wind type="uniform">
+                <velocity xyz="0.0 0.0 0.0"/>
+            </wind>
+        </atmosphere>
+    </environment>
+
+    <materials>
+        <material name="Fiberglass" density="1800.0" restitution="0.5" friction="0.8"/>
+        <material name="Aluminium" density="2700.0" restitution="0.7" friction="0.5"/>
+        <material name="Neutral" density="1000.0" restitution="0.5" friction="0.5"/>
+        <friction_table>
+            <friction material1="Fiberglass" material2="Fiberglass" static="0.5" dynamic="0.2"/>
+            <friction material1="Aluminium" material2="Aluminium" static="0.8" dynamic="0.5"/>
+            <friction material1="Neutral" material2="Neutral" static="0.5" dynamic="0.5"/>
+        </friction_table>
+    </materials>
+
+    <looks>
+        <look name="gray" gray="0.5" roughness="0.4"/>
+        <look name="white_led" rgb="5.0 5.0 5.0" roughness="0.0"/>
+        <look name="black" gray="0.05" roughness="0.5"/>
+        <look name="red" rgb="0.8 0.1 0.1" roughness="0.5"/>
+        <look name="lauv_body" rgb="0.9 0.6 0.2" roughness="0.3"/> 
+    </looks>
+
+    <robot name="dock" fixed="true" self_collisions="false">
+        <base_link name="FunnelLink" type="compound" physics="submerged">
+            <external_part name="FunnelMesh" type="model" physics="submerged" buoyant="false">
+                <physical>
+                    <mesh filename="funnel_new.obj" scale="1.0"/>
+                    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                </physical>
+                <material name="Aluminium"/>
+                <look name="gray"/>
+                <compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </external_part>
+
+            <external_part name="Bulb1" type="sphere" physics="submerged" buoyant="false">
+                <dimensions radius="0.02"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <look name="white_led"/>
+                <compound_transform rpy="0.0 1.571 0.0" xyz="0.0 1.00784 -0.574521"/>
+            </external_part>
+
+            <external_part name="Bulb2" type="sphere" physics="submerged" buoyant="false">
+                <dimensions radius="0.02"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <look name="white_led"/>
+                <compound_transform rpy="0.0 0.785 0.0" xyz="0.406248 1.00784 -0.406248"/>
+            </external_part>
+
+            <external_part name="Bulb3" type="sphere" physics="submerged" buoyant="false">
+                <dimensions radius="0.02"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <look name="white_led"/>
+                <compound_transform rpy="0.0 0.0 0.0" xyz="0.574521 1.00784 0.0"/>
+            </external_part>
+
+            <external_part name="Bulb5" type="sphere" physics="submerged" buoyant="false">
+                <dimensions radius="0.02"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <look name="white_led"/>
+                <compound_transform rpy="0.0 1.571 0.0" xyz="0.0 1.00784 0.574521"/>
+            </external_part>
+
+            <external_part name="Bulb7" type="sphere" physics="submerged" buoyant="false">
+                <dimensions radius="0.02"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <look name="white_led"/>
+                <compound_transform rpy="0.0 0.0 0.0" xyz="-0.574521 1.00784 0.0"/>
+            </external_part>
+        </base_link>
+
+        <light name="Light1">
+            <link name="FunnelLink"/>
+            <specs illuminance="5000.0" radius="0.04"/>
+            <color rgb="0.0 1.0 0.0"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 1.00784 -0.574521"/>
+        </light>
+
+        <light name="Light2">
+            <link name="FunnelLink"/>
+            <specs illuminance="5000.0" radius="0.04"/>
+            <color rgb="0.0 1.0 0.0"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.406248 1.00784 -0.406248"/>
+        </light>
+
+        <light name="Light3">
+            <link name="FunnelLink"/>
+            <specs illuminance="5000.0" radius="0.04"/>
+            <color rgb="0.0 1.0 0.0"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.574521 1.00784 0.0"/>
+        </light>
+
+        <light name="Light5">
+            <link name="FunnelLink"/>
+            <specs illuminance="5000.0" radius="0.04"/>
+            <color rgb="0.0 1.0 0.0"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 1.00784 0.574521"/>
+        </light>
+
+        <light name="Light7">
+            <link name="FunnelLink"/>
+            <specs illuminance="5000.0" radius="0.04"/>
+            <color rgb="0.0 1.0 0.0"/>
+            <origin rpy="0.0 0.0 0.0" xyz="-0.574521 1.00784 0.0"/>
+        </light>
+
+        <sensor name="position" type="odometry" rate="1.0">
+            <ros_publisher topic="/dock/position"/>
+            <link name="FunnelLink"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        </sensor>
+
+        <world_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 10.0"/>
+    </robot>
+
+    <robot name="lauv" fixed="false" self_collisions="false">
+        <ros_publisher servos="/lauv/joint_states" thrusters="/lauv/thruster/state"/>
+        <ros_subscriber servos="/lauv/fins/setpoint" thrusters="/lauv/thruster/setpoint"/>
+
+        <base_link name="Vehicle" type="compound" physics="submerged">
+            <dynamic>
+                <hydrodynamics 
+                    viscous_drag="80.0 400.0 400.0" 
+                    quadratic_drag="120.0 600.0 600.0"/>
+            </dynamic>
+
+            <external_part name="Hull" type="model" physics="submerged" buoyant="true">
+                <physical>
+                    <mesh filename="lauvbody(new).obj" scale="1.0"/>
+                    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                </physical>
+
+                <visual>
+                    <mesh filename="lauvbody(new).obj" scale="1.0"/>
+                    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                </visual>
+
+                <material name="Fiberglass"/>
+                <look name="lauv_body"/>
+                <mass value="6.0"/>  
+                <cg xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </external_part>
+
+            <internal_part name="BuoyancyComp1" type="cylinder" physics="submerged" buoyant="true">
+                <dimensions radius="0.075" height="0.35"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <mass value="0.01"/>  <look name="gray"/>
+                <compound_transform rpy="0.0 1.571 0.0" xyz="0.3 0.0 0.0"/>
+            </internal_part>
+
+            <internal_part name="BuoyancyComp2" type="cylinder" physics="submerged" buoyant="true">
+                <dimensions radius="0.075" height="0.3"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <mass value="0.01"/>
+                <look name="gray"/>
+                <compound_transform rpy="0.0 1.571 0.0" xyz="0.0 0.0 0.0"/>
+            </internal_part>
+
+            <internal_part name="BuoyancyComp3" type="cylinder" physics="submerged" buoyant="true">
+                <dimensions radius="0.075" height="0.35"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <mass value="0.01"/>
+                <look name="gray"/>
+                <compound_transform rpy="0.0 1.571 0.0" xyz="-0.3 0.0 0.0"/>
+            </internal_part>
+
+            <internal_part name="BallastForward" type="cylinder" physics="submerged" buoyant="false">
+                <dimensions radius="0.045" height="0.3"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <mass value="7.20"/> <look name="gray"/>
+                <compound_transform rpy="0.0 1.571 0.0" xyz="0.25 0.0 0.015"/>
+            </internal_part>
+
+            <internal_part name="BallastCenter" type="cylinder" physics="submerged" buoyant="false">
+                <dimensions radius="0.05" height="0.35"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <mass value="8.0"/> <look name="gray"/>
+                <compound_transform rpy="0.0 1.571 0.0" xyz="0.0 0.0 0.015"/>
+            </internal_part>
+
+            <internal_part name="BallastAft" type="cylinder" physics="submerged" buoyant="false">
+                <dimensions radius="0.045" height="0.3"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <mass value="4.586"/> <look name="gray"/>
+                <compound_transform rpy="0.0 1.571 0.0" xyz="-0.25 0.0 0.005"/>
+            </internal_part>
+        </base_link>
+
+        <sensor name="dynamics" type="odometry" rate="30.0">
+            <ros_publisher topic="/lauv/dynamics/odometry"/>
+            <link name="Vehicle"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        </sensor>
+
+        <sensor name="imu_filter" type="imu" rate="20.0">
+            <ros_publisher topic="/lauv/imu"/>
+            <history samples="1000"/>
+            <link name="Vehicle"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        </sensor>
+
+        <sensor name="gps" type="gps" rate="1.0">
+            <ros_publisher topic="/lauv/gps"/>
+            <link name="Vehicle"/>
+            <origin rpy="0.0 0.0 0.0" xyz="-0.5 0.0 -0.2"/>
+            <noise ned_position="0.5"/>
+        </sensor>
+
+        <sensor name="pressure" type="pressure" rate="5.0">
+            <ros_publisher topic="/lauv/pressure"/>
+            <link name="Vehicle"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            <noise pressure="5.0"/>
+        </sensor>
+
+        <sensor name="dvl" type="dvl" rate="20.0">
+            <ros_publisher topic="/lauv/dvl" altitude_topic="/lauv/dvl/altitude"/>
+            <history samples="1000"/>
+            <link name="Vehicle"/>
+            <origin rpy="3.1416 0.0 0.0" xyz="-0.5 0.0 0.1"/>
+            <specs beam_angle="30.0"/>
+            <range velocity="9.0 9.0 9.0" altitude_min="0.5" altitude_max="81.0"/>
+            <water_layer minimum_layer_size="5.0" boundary_near="10.0" boundary_far="30.0"/>
+            <noise velocity="0.0015" altitude="0.001"/>
+        </sensor>
+
+        <link name="FinTopLink" type="model" physics="submerged">
+            <physical>
+                <mesh filename="red_fin.obj" scale="1.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </physical>
+            <visual>
+                <mesh filename="red_fin.obj" scale="1.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </visual>
+            <material name="Neutral"/>
+            <look name="red"/>
+            <mass value="0.2"/>
+            <cg xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <inertia xyz="0.0001 0.0002 0.0002"/>
+        </link>
+
+        <joint name="FinTop" type="revolute">
+            <parent name="Vehicle"/>
+            <child name="FinTopLink"/>
+            <origin rpy="0.0 0.485 0.0" xyz="-0.445408 0.0 -0.030115"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limits min="-0.6" max="0.6"/>
+        </joint>
+
+        <actuator name="FinTop" type="servo">
+            <joint name="FinTop"/>
+            <controller position_gain="1.0" velocity_gain="1.0" max_torque="10.0" max_velocity="2.0"/>
+        </actuator>
+
+        <actuator name="FinTopHydro" type="rudder">
+            <link name="FinTopLink"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            <specs lift_coeff="5.0" drag_coeff="0.15" max_angle="0.5" area="0.02"/>
+            <visual>
+                <mesh filename="red_fin.obj" scale="0.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <look name="red"/>
+            </visual>
+        </actuator>
+
+        <link name="FinBottomLink" type="model" physics="submerged">
+            <physical>
+                <mesh filename="red_fin.obj" scale="1.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </physical>
+            <visual>
+                <mesh filename="red_fin.obj" scale="1.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </visual>
+            <material name="Neutral"/>
+            <look name="red"/>
+            <mass value="0.2"/>
+            <cg xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <inertia xyz="0.0001 0.0002 0.0002"/>
+        </link>
+
+        <joint name="FinBottom" type="revolute">
+            <parent name="Vehicle"/>
+            <child name="FinBottomLink"/>
+            <origin rpy="3.14159 -0.485 0.0" xyz="-0.445408 0.0 0.030115"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limits min="-0.6" max="0.6"/>
+        </joint>
+
+        <actuator name="FinBottom" type="servo">
+            <joint name="FinBottom"/>
+            <controller position_gain="1.0" velocity_gain="1.0" max_torque="10.0" max_velocity="2.0"/>
+        </actuator>
+
+        <actuator name="FinBottomHydro" type="rudder">
+            <link name="FinBottomLink"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            <specs lift_coeff="5.0" drag_coeff="0.15" max_angle="0.5" area="0.02"/>
+            <visual>
+                <mesh filename="red_fin.obj" scale="0.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <look name="red"/>
+            </visual>
+        </actuator>
+
+        <link name="FinStbdLink" type="model" physics="submerged">
+            <physical>
+                <mesh filename="black_fin.obj" scale="1.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </physical>
+            <visual>
+                <mesh filename="black_fin.obj" scale="1.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </visual>
+            <material name="Neutral"/>
+            <look name="black"/>
+            <mass value="0.2"/>
+            <cg xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <inertia xyz="0.0001 0.0002 0.0002"/>
+        </link>
+
+        <joint name="FinStbd" type="revolute">
+            <parent name="Vehicle"/>
+            <child name="FinStbdLink"/>
+            <origin rpy="1.571 0.0 0.485" xyz="-0.445408 0.030115 0.0"/>
+            <axis xyz="0.0 0.0 1.0"/> <limits min="-0.6" max="0.6"/>
+        </joint>
+
+        <actuator name="FinStbd" type="servo">
+            <joint name="FinStbd"/>
+            <controller position_gain="1.0" velocity_gain="1.0" max_torque="10.0" max_velocity="2.0"/>
+        </actuator>
+
+        <actuator name="FinStbdHydro" type="rudder"> 
+            <link name="FinStbdLink"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            <specs lift_coeff="8.0" drag_coeff="0.15" max_angle="0.5" area="0.02"/>
+            <visual>
+                <mesh filename="black_fin.obj" scale="0.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <look name="black"/>
+            </visual>
+        </actuator>
+
+        <link name="FinPortLink" type="model" physics="submerged">
+            <physical>
+                <mesh filename="black_fin.obj" scale="1.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </physical>
+            <visual>
+                <mesh filename="black_fin.obj" scale="1.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            </visual>
+            <material name="Neutral"/>
+            <look name="black"/>
+            <mass value="0.2"/>
+            <cg xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <inertia xyz="0.0001 0.0002 0.0002"/>
+        </link>
+
+        <joint name="FinPort" type="revolute">
+            <parent name="Vehicle"/>
+            <child name="FinPortLink"/>
+            <origin rpy="-1.571 0.0 -0.485" xyz="-0.445408 -0.030115 0.0"/>
+            <axis xyz="0.0 0.0 1.0"/> <limits min="-0.6" max="0.6"/>
+        </joint>
+
+        <actuator name="FinPort" type="servo">
+            <joint name="FinPort"/>
+            <controller position_gain="1.0" velocity_gain="1.0" max_torque="10.0" max_velocity="2.0"/>
+        </actuator>
+
+        <actuator name="FinPortHydro" type="rudder">
+            <link name="FinPortLink"/>
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+            <specs lift_coeff="8.0" drag_coeff="0.15" max_angle="0.5" area="0.02"/>
+            <visual>
+                <mesh filename="black_fin.obj" scale="0.0"/>
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <material name="Neutral"/>
+                <look name="black"/>
+            </visual>
+        </actuator>
+
+        <actuator name="Thruster" type="thruster">
+            <link name="Vehicle"/>
+            <origin rpy="0.0 0.0 0.0" xyz="-0.53977 0.000363 -0.000466"/>
+            <specs max_setpoint="260" inverted_setpoint="false" normalized_setpoint="false"/>
+
+            <propeller diameter="0.2" right="true">
+                <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+                <mesh filename="propeller(lauv).obj" scale="1.0" />
+                <material name="Neutral" />
+                <look name="black" />
+            </propeller>
+
+            <rotor_dynamics type="mechanical_pi">
+                <propeller_inertia value="0.001"/>
+                <kp value="2.0"/>
+                <ki value="1.0"/>
+                <ilimit value="5.0"/>
+            </rotor_dynamics>
+
+            <thrust_model type="fluid_dynamics">
+                <thrust_coeff forward="0.003" reverse="0.002"/>
+                <torque_coeff value="0.001"/>
+            </thrust_model>
+        </actuator>
+
+        <light name="Omni">
+            <link name="Vehicle"/>
+            <specs illuminance="20000.0" radius="0.1"/>
+            <color temperature="3000.0"/>
+            <origin xyz="0.0 0.0 1.0" rpy="0.0 0.0 0.0"/>
+        </light>
+
+        <world_transform rpy="0.0 0.0 0.0" xyz="25.0 20.0 3.0"/>
+    </robot>
+</scenario>

@@ -1,0 +1,12 @@
+# Blender 5.0.0 MTL File: 'None'
+# www.blender.org
+
+newmtl MBake_Complete_001
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.400000 0.400000 0.400000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd /home/a3dobject/lauv_gazebo/lauv_description/meshes/MBake_Complete.png
