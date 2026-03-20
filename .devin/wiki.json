@@ -1,0 +1,301 @@
+{
+  "repo_notes": [
+    {
+      "content": ""
+    }
+  ],
+  "pages": [
+    {
+      "title": "Stonefish Simulator — Overview",
+      "purpose": "High-level introduction to the Stonefish marine robotics simulation library: its purpose, key capabilities, architecture overview, and links to all major subsystem pages.",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Getting Started: Installation and Build System",
+      "purpose": "Step-by-step guide to installing dependencies, building the library with CMake (BUILD_TESTS, EMBED_RESOURCES options), system-wide installation, and consuming the Stonefish::Stonefish CMake target in external projects.",
+      "parent": "Stonefish Simulator — Overview",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Project Structure and Source Layout",
+      "purpose": "Map of the repository directories — Library/src, Library/include, 3rdparty, Tests, scripts, docs — explaining what lives where and how the modules relate to each other.",
+      "parent": "Stonefish Simulator — Overview",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Scripts Directory: AUV Docking Simulation",
+      "purpose": "Details the contents of the scripts/ directory, specifically featuring the ROS2 AUV docking control script. Covers the implemented GNC architecture for Stonefish simulations, including Phase 1 Artificial Potential Field (APF) staging, Phase 2 PLATO kinematic speed profiling with Pure Pursuit, and the Emergency Reflex Layer for mathematical collision avoidance.",
+      "parent": "Project Structure and Source Layout",
+      "page_notes": [
+        {
+          "content": "### 1. Phase 1: Artificial Potential Field (APF) Staging\nThe APF phase guides the AUV from a random starting position to a safe staging point directly in front of the dock, avoiding the physical dock structure in the process.\n\nThe total virtual force acting on the AUV is the sum of three distinct fields: F_total = F_att + F_rep + F_tan.\n\n* Attractive Field (F_att): Pulls the AUV toward the staging point. F_att = K_att * (p_staging - p_auv) / max(d_staging, 0.001)\n* Repulsive Field (F_rep): Pushes the AUV away from the dock center, activating only within the influence radius (r_inf). F_rep = K_rep * (1/d - 1/r_inf)^2 * n\n* Tangential Field (F_tan): Prevents local minima by creating a clockwise sweeping force. F_tan = K_tan * (1/d - 1/r_inf)^2 * t\n\n### 2. Phase 2: Pure Pursuit Guidance\nOnce the AUV reaches the staging point, it aligns with the docking axis. Pure Pursuit minimizes the cross-track error to guide the AUV into the dock mouth.\n* Path Projection: s_curr = v_MA dot u_path\n* Lookahead Calculation: P_goal = P_closest + L * u_path\n\n### 3. Phase 2: PLATO Kinematic Speed Profiler\nEnsures a soft latching sequence by dynamically braking the AUV based on velocity and distance.\n* Dynamic Braking Radius: R_d(t) = r_d + f_dec * (s_t^2) / (2 * a_max)\n* Desired Speed: s_d(t) = s_min + (s_c - s_min) * ( (ln(d_t) - ln(r_d)) / (ln(R_d(t)) - ln(r_d)) )^n_t\n\n### 4. Emergency Reflex Layer (Collision Avoidance)\nA mathematical reflex layer defining a keep-out cylinder with a safe entry corridor. If the AUV is physically inside the dock's hazard radius (d_obs < r_hazard) AND has drifted outside the safe entry funnel (XTE > w_corridor), guidance commands are completely overwritten with maximum reverse surge thrust (u_surge = 200.0)."
+        }
+      ]
+    },
+    {
+      "title": "Core Simulation Framework",
+      "purpose": "Overview of the central simulation engine: the SimulationManager lifecycle, application types, robot abstraction, and supporting managers. Links to child pages for each major core component.",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "SimulationManager and Application Lifecycle",
+      "purpose": "Detailed coverage of SimulationManager (BuildScenario, physics step callbacks, solver types, collision filters), GraphicalSimulationApp vs ConsoleSimulationApp, and the SimulationApp base class.",
+      "parent": "Core Simulation Framework",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Scenario Definition and XML Parser",
+      "purpose": "How to define simulation scenarios: the XML scenario file format (environment, materials, bodies, robots, sensors, actuators tags), the ScenarioParser class, include files, and the tinyxml2/tinyexpr integration.",
+      "parent": "Core Simulation Framework",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Robot Model: Links, Joints, and Kinematics",
+      "purpose": "How robots (kinematic trees) are constructed from SolidEntity links and joints, the Robot/FeatherstoneRobot/GeneralRobot class hierarchy, Featherstone multi-body algorithm, and joint types (Fixed, Revolute, Prismatic, Cylindrical, Spherical, Spring, Screw).",
+      "parent": "Core Simulation Framework",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Supporting Core Managers",
+      "purpose": "NameManager (unique naming), MaterialManager (material properties and friction tables), NED coordinate system, Console logging, FilteredCollisionDispatcher, and TorusShape custom collision shape.",
+      "parent": "Core Simulation Framework",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Entity System",
+      "purpose": "Overview of the entity hierarchy — static, dynamic (solid), animated, cable, and forcefield entities — and how they integrate with the physics engine. Links to child pages for each entity category.",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Static and Dynamic Solid Bodies",
+      "purpose": "StaticEntity (Plane, Obstacle, Terrain), SolidEntity and its concrete shapes (Box, Sphere, Cylinder, Torus, Polyhedron, Compound, Wing), physical property computation from geometry, hydrodynamics settings, and BodyFluidPosition tracking.",
+      "parent": "Entity System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Animated Entities and Trajectory System",
+      "purpose": "AnimatedEntity for scripted motion, trajectory types (BSTrajectory B-spline, CRTrajectory Catmull-Rom, PWLTrajectory piecewise-linear, ManualTrajectory), and the tinyspline integration.",
+      "parent": "Entity System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Cable Entity",
+      "purpose": "CableEntity for flexible tether/cable simulation using Bullet SoftBody, CableNodalForces (buoyancy, form drag, skin friction), CableEnds attachment options, and hydrodynamic forces on cables.",
+      "parent": "Entity System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Forcefields: Ocean, Atmosphere, and Velocity Fields",
+      "purpose": "ForcefieldEntity base class, Ocean (waves, currents, hydrodynamics settings, Jerlov water types), Atmosphere, and velocity field types (Jet, Pipe, Uniform, VelocityField, Trigger).",
+      "parent": "Entity System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Hydrodynamics and Physics Engine",
+      "purpose": "Overview of the physics and hydrodynamics subsystems: Bullet Physics integration, geometry-based hydrodynamic force computation, and the theoretical foundations. Links to child pages.",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Bullet Physics Integration and Collision",
+      "purpose": "How Stonefish embeds and configures Bullet Physics (BT_USE_DOUBLE_PRECISION, BT_EULER_DEFAULT_ZYX), the FilteredCollisionDispatcher, collision shapes (convex hull, concave-convex, TorusShape), material friction, and the Stribeck transition model.",
+      "parent": "Hydrodynamics and Physics Engine",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Geometry-Based Hydrodynamics",
+      "purpose": "Theory and implementation of geometry-based hydrodynamic force computation: added mass, buoyancy (including partial submersion), quadratic form drag, skin friction, GeometryApproxType, and the HydrodynamicsSettings structure.",
+      "parent": "Hydrodynamics and Physics Engine",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Actuators",
+      "purpose": "Overview of the actuator system: joint actuators vs link actuators, the Actuator base class, watchdog timers, and links to specific actuator type pages.",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Joint Actuators: Motors and Servos",
+      "purpose": "JointActuator base class, Motor, DCMotor (with electrical model), Servo (position-controlled), and the RotorDynamics models (ZeroOrder, FirstOrder, Yoeger, Bessa, MechanicalPI) defined in ActuatorDynamics.",
+      "parent": "Actuators",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Link Actuators: Thrusters, Propellers, and Marine Devices",
+      "purpose": "LinkActuator base class, Thruster (with ThrustModel and RotorDynamics), SimpleThruster, Propeller, Rudder (hydrofoil), VariableBuoyancy (VBS), SuctionCup, Push, and Light actuators.",
+      "parent": "Actuators",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Sensors",
+      "purpose": "Overview of the sensor system: the three sensor groups (joint, link, vision), the Sensor/ScalarSensor/VisionSensor base classes, Sample data structure, noise models, and links to child pages.",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Scalar Sensors: Joint and Link Sensors",
+      "purpose": "Joint sensors (RotaryEncoder, RealRotaryEncoder, Torque, ForceTorque, JointSensor), link sensors (IMU, INS, Accelerometer, Gyroscope, Compass, GPS, Pressure, DVL, Odometry, Pose, Current, Multibeam, Profiler, Mux), noise configuration, and the Sample data container.",
+      "parent": "Sensors",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Vision Sensors: Cameras and Acoustic Imaging",
+      "purpose": "VisionSensor base class, Camera hierarchy (ColorCamera, DepthCamera, SegmentationCamera, ThermalCamera, EventBasedCamera, OpticalFlowCamera), acoustic imaging sensors (FLS, SSS, MSIS, Multibeam2), GPU-accelerated sonar simulation via OpenGL, and output data formats.",
+      "parent": "Sensors",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Communication Devices",
+      "purpose": "Overview of the underwater communication subsystem: the Comm base class, message lifecycle, and links to acoustic/optical modem and USBL child pages.",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Acoustic and Optical Modems",
+      "purpose": "Comm base class (CommDataFrame, RxBuffer/TxBuffer, SDL_mutex thread safety), AcousticModem (propagation delay, speed of sound), OpticalModem (line-of-sight raycasting), Connect/SendMessage/ReadMessage API, and integration with SimulationManager.",
+      "parent": "Communication Devices",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "USBL Acoustic Positioning System",
+      "purpose": "USBL class hierarchy (USBL → USBLSimple, USBLReal), beacon interrogation and auto-ping, BeaconInfo data structure, USBLSimple idealized model vs USBLReal Gaussian noise model, azimuth/elevation computation, and setNoise/setResolution configuration.",
+      "parent": "Communication Devices",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Rendering Pipeline",
+      "purpose": "Overview of the custom OpenGL 4.3 rendering pipeline: its architecture, key subsystems (ocean, atmosphere, sonar visualization, cameras), and links to child pages.",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "OpenGL Pipeline Architecture",
+      "purpose": "OpenGLPipeline (Render loop, drawing queue), OpenGLContent (mesh/texture management), OpenGLState (state machine), OpenGLView (SDL2 window/context), GLSLShader (GLSL program management), IMGUI (in-simulation HUD), OpenGLPrinter (Freetype text), and RenderSettings/HelperSettings structures.",
+      "parent": "Rendering Pipeline",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Ocean and Atmosphere Rendering",
+      "purpose": "OpenGLOcean (FFT-based wave simulation, ocean optics), OpenGLRealOcean vs OpenGLFlatOcean, OpenGLAtmosphere (sky and sun rendering), Jerlov water type data, wavelength-dependent light absorption/scattering, ocean particles, and the GLSL shader files for ocean/atmosphere.",
+      "parent": "Rendering Pipeline",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Camera and Sonar Visualization",
+      "purpose": "OpenGLCamera hierarchy (OpenGLRealCamera, OpenGLDepthCamera, OpenGLSegmentationCamera, OpenGLThermalCamera, OpenGLEventBasedCamera, OpenGLOpticalFlowCamera), GPU-accelerated sonar rendering (OpenGLSonar, OpenGLFLS, OpenGLSSS, OpenGLMSIS), OpenGLTrackball, and lighting (OpenGLPointLight, OpenGLSpotLight).",
+      "parent": "Rendering Pipeline",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    }
+  ]
+}
